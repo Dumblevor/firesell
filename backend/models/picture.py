@@ -1,5 +1,6 @@
 from app import db
 from models.basemodel import BaseModel
+from models.product import ProductModel
 
 
 class PictureModel(db.Model, BaseModel):

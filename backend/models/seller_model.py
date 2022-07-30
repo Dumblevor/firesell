@@ -13,7 +13,7 @@ class SellerModel(db.Model, BaseModel):
     email = db.Column(db.Text, nullable=False, unique=True)
     password_hash = db.Column(db.Text, nullable=True)
     username = db.Column(db.Text, nullable=False, unique=True)
-    phone = db.Column(db.Integer, nullable=False, unique=False)
+    phone = db.Column(db.Text, nullable=False, unique=False)
     address = db.Column(db.Text, nullable=False, unique=False)
 
     @hybrid_property

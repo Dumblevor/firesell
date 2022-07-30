@@ -4,7 +4,9 @@ import jwt
 from config.envir import secret
 from app import db, bcrypt
 from models.basemodel import BaseModel
-
+from models.order import OrderModel
+from models.rating import RatingModel
+from models.comment import CommentModel
 
 class CustomerModel(db.Model, BaseModel):
     __tablename__ = "customers"
@@ -13,7 +15,7 @@ class CustomerModel(db.Model, BaseModel):
     email = db.Column(db.Text, nullable=False, unique=True)
     password_hash = db.Column(db.Text, nullable=True)
     username = db.Column(db.Text, nullable=False, unique=True)
-    phone = db.Column(db.Integer, nullable=False, unique=False)
+    phone = db.Column(db.Text, nullable=False, unique=False)
     address = db.Column(db.Text, nullable=False, unique=False)
 
     orders = db.relationship("OrderModel", backref="customers")

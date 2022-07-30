@@ -20,3 +20,6 @@ ratings_list = [
     RatingModel(rating=3.3, product_id=3, comment_owner_id=2),
     RatingModel(rating=4.3, product_id=1, comment_owner_id=3)
 ]
+
+
+
