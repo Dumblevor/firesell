@@ -1,7 +1,7 @@
 from app import ma
 from models.product import ProductModel
 from marshmallow import fields
-
+from serializers.comment_serializer import CommentSchema
 
 class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

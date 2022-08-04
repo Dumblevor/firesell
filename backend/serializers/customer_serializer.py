@@ -1,6 +1,6 @@
 from marshmallow import fields
 from app import ma
-from models.customer_model import CustomerModel
+from models.customer import CustomerModel
 
 class CustomerSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

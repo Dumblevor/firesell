@@ -1,4 +1,4 @@
-from models.customer_model import CustomerModel
+from models.customer import CustomerModel
 
 customer_list = [
     CustomerModel(name="Nick", password="nick123", email="nick@nick.com", username="Nikc10", phone=55593249324, address="midlands"),

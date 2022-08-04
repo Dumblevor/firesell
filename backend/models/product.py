@@ -15,6 +15,7 @@ class ProductModel(db.Model, BaseModel):
     name = db.Column(db.Text, nullable=False, unique=False)
     price = db.Column(db.Float, nullable=False, unique=False)
     description = db.Column(db.Text, nullable=False, unique=False)
+    
     product_owner_ID = db.Column(db.Integer, db.ForeignKey("sellers.id", ondelete='CASCADE'), nullable=False)
     
     categories = db.relationship("CategoryModel", backref='products', secondary=catPro)

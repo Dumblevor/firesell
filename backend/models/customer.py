@@ -11,22 +11,16 @@ from models.basemodel import BaseModel
 class CustomerModel(db.Model, BaseModel):
     __tablename__ = "customers"
 
-    name = db.Column(db.Text, nullable=False, unique=False)
+    name = db.Column(db.Text, nullable=True, unique=False)
     email = db.Column(db.Text, nullable=False, unique=True)
-    password_hash = db.Column(db.Text, nullable=True)
-    username = db.Column(db.Text, nullable=False, unique=True)
-    phone = db.Column(db.Text, nullable=False, unique=False)
-    address = db.Column(db.Text, nullable=False, unique=False)
+    password_hash = db.Column(db.Text, nullable=False)
+    username = db.Column(db.Text, nullable=True, unique=True)
+    phone = db.Column(db.Text, nullable=True, unique=False)
+    address = db.Column(db.Text, nullable=True, unique=False)
 
     orders = db.relationship("OrderModel", backref="customers")
     comments = db.relationship("CommentModel", backref="customers")
     ratings = db.relationship("RatingModel", backref="customers")
-
-
-
-
-
-
 
     @hybrid_property
     def password(self):

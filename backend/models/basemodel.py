@@ -10,7 +10,7 @@ class BaseModel:
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-    def safe(self):
+    def save(self):
         db.session.add(self)
         db.session.commit()
 

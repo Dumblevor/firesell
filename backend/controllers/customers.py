@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from flask import Blueprint, request
 from models.product import ProductModel
-from models.customer_model import CustomerModel
+from models.customer import CustomerModel
 from serializers.customer_serializer import CustomerSchema
 from marshmallow.exceptions import ValidationError
 
@@ -15,14 +15,19 @@ router = Blueprint("users", __name__)
 def register_customer():
     try:
         customer_dictionary = request.json
+        print("1", customer_dictionary)
         customer = customer_schema.load(customer_dictionary)
+        print("2", customer)
+
         customer.save()
+        print("3")
         return customer_schema.jsonify(customer)
     except ValidationError as e:
-        return {"errors": e.messages, "messages": "Something went wrong."}
+        return {"errors": e.messages, "messages": "Something went wrong1."}
 
     except Exception as e:
-        return {"messages": "Something went wrong."}
+        print(e)
+        return {"messages": "Something went wrong2."}
 
 
 @router.route("/customerlogin", methods=["POST"])
@@ -41,6 +46,6 @@ def customer_login():
             return {"message": "You are not autorized."}, HTTPStatus.UNAUTHORIZED
         token = customer.generate_token()
         return {"token": token, "message": "Welcome back!"}
-        raise BaseException()
+
     except Exception as e:
         return {"message": "Something went wrong"}
