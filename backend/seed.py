@@ -1,7 +1,7 @@
 from app import app, db
-from data.customer_data import customer_list
-from data.order_data import order_list
 from data.product_data import product_list, comments_list, ratings_list
+from data.customer_data import customer_list
+from data.order_data import order_list, orderline_list
 from data.seller_data import seller_list
 from data.pictures_data import picture_list
 
@@ -33,6 +33,9 @@ with app.app_context():
         db.session.commit()
 
         db.session.add_all(order_list)
+        db.session.commit()
+
+        db.session.add_all(orderline_list)
         db.session.commit()
 
         print("goodbye")

@@ -4,9 +4,9 @@ import jwt
 from config.envir import secret
 from app import db, bcrypt
 from models.basemodel import BaseModel
-from models.order import OrderModel
-from models.rating import RatingModel
-from models.comment import CommentModel
+# from models.order import OrderModel
+# from models.rating import RatingModel
+# from models.comment import CommentModel
 
 class CustomerModel(db.Model, BaseModel):
     __tablename__ = "customers"
