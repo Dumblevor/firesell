@@ -46,10 +46,7 @@ export default function Product(props) {
       <div>€ {props.price}</div>
 
       <CardActions>
-        <ButtonGroup variant="outlined" aria-label="outlined button group">
-          <Button variant="outlined" size="small">Add to cart</Button>
-          <Button variatn="" size="small">Purchase now</Button>
-        </ButtonGroup>
+        <Button variatn="" size="small">Purchase now</Button>
       </CardActions>
     </Card >
   )
