@@ -7,6 +7,8 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = ProductModel
         load_instance = True
+        include_fk = True
+
 
     comments = fields.Nested("CommentSchema", many=True)
     seller = fields.Nested("SellerSchema", many=False)

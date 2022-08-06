@@ -14,7 +14,8 @@ ma = Marshmallow(app)
 
 bcrypt = Bcrypt(app)
 
-from controllers import customers, products
+from controllers import customers, products, orders
 
 app.register_blueprint(customers.router, url_prefix="/api")
 app.register_blueprint(products.router, url_prefix="/api")
+app.register_blueprint(orders.router, url_prefix="/api")
