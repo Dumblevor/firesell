@@ -41,7 +41,7 @@ export default function Login() {
 
 return (
   <>
-    <div>
+    <div className="mx-5">
       <div>Image</div>
       <h1> Welcome back</h1>
       <h2> Sign in below</h2>
@@ -72,7 +72,7 @@ return (
             />
           </div>
         </div>
-        <Button variant="outlined">
+        <Button sx={{ mt: 2 }} variant="outlined">
             SIGN IN
           </Button>
 
@@ -81,7 +81,7 @@ return (
       <div>Forgot password?</div>
       <div>No account? Signup here.</div>
     </div>
-    <p>Copyright Firesell 2022 by Dimitar Vidolov</p>
+    <p className="mx-5 my-5">Copyright Firesell 2022 by Dimitar Vidolov</p>
   </>
 )
 

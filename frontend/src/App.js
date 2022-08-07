@@ -6,6 +6,9 @@ import Navbar from './Components/UI/Navbar'
 import Login from './Components/Login'
 import CustomerReg from './Components/CustomerReg'
 import ProductPage from './Components/products/ProductPage'
+import Checkout from './Components/Checkout'
+import SellerReg from './Components/SellerReg'
+import SuccessfulOrder from './Components/UI/SuccessfulOrder'
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<CustomerReg />} />
         <Route path="/product/:productID" element={<ProductPage />} />
+        <Route path="/checkout/:productID" element={<Checkout />} />
+        <Route path="/newseller" element={<SellerReg />} />
+        <Route path="/sucessfulorder" element={<SuccessfulOrder />} />
       </Routes>
     </Router>
   </>

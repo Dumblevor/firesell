@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import baseUrl from "../../config"
-
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 
 export default function ProductPage() {
@@ -20,29 +27,42 @@ export default function ProductPage() {
   })
 
 
+
+
   return (
     <>
       {productData ?
-        <div className="card">
+        <Card sx={{ maxWidth: 345 }}>
 
-          <Link to={`/product/${productData.id}`}>
-            <div>Logo</div>
-            <div className="title is-4">{productData.name}</div>
-          </Link>
+          <div>Logo</div>
+          <CardContent>
+            <Link to={`/product/${productData.id}`}>
+              <Typography gutterBottom variant="h5" component="div">{productData.name}</Typography>
+            </Link>
 
-          <div className="subtitle is-6">
-            sold by: (seller id) - {productData.product_owner_ID}
-          </div>
+            <CardMedia
+              component="img"
+              height="140"
+              image="/static/images/cards/contemplative-reptile.jpg"
+              alt="green iguana"
+            />
+            <div className="subtitle is-6">sold by: (seller id) - {productData.product_owner_ID}</div>
+            <Typography variant="body2" color="text.secondary">{productData.description}</Typography>
 
-          <div>{productData.description}</div>
+          </CardContent>
 
-          <div>Preview image</div>
-
-          <div>Rating:{productData.rating}</div>
+          <Stack spacing={1}>
+            {/* <Rating name="half-rating" defaultValue={2.5} precision={0.5} /> */}
+            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+          </Stack>
 
           <div>€ {productData.price}</div>
 
-        </div>
+          <CardActions>
+            <Button component={ Link } variant="outlined" to={`/checkout/${productData.id}`}>
+              Purchase now</Button>
+          </CardActions>
+        </Card >
         : <p>Loading product</p>
       }
     </>

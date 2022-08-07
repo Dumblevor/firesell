@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button';
 
 
-export default function CustomerReg() {
+export default function SellerReg() {
   const navigate = useNavigate()
   const [registrationDataForm, setRegistrationDataForm] = useState({
     email: "",
@@ -24,7 +24,7 @@ export default function CustomerReg() {
   async function handleRegistrationSubmission(e) {
     e.preventDefault()
     try {
-      const { data } = await axios.post(`${baseUrl}/newcustomer`, registrationDataForm)
+      const { data } = await axios.post(`${baseUrl}/newseller`, registrationDataForm)
       data
       // && data.token && localStorage.setItem('token', data.token)
       && navigate('/')
@@ -71,7 +71,6 @@ export default function CustomerReg() {
           </Button>
 
         </form>
-        <div> remember me</div>
         <div>Already have an account? Sign in here.</div>
       </div>
       <p className="mx-5 my-5">Copyright Firesell 2022 by Dimitar Vidolov</p>

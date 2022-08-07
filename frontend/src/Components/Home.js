@@ -3,6 +3,11 @@ import baseUrl from "../config.js"
 import axios from 'axios'
 import Product from './products/Product.js'
 import { useLocation } from "react-router-dom";
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
 
 export default function Home() {
   const location = useLocation()
@@ -22,8 +27,8 @@ export default function Home() {
     getProductData()
     const productInterval = setInterval(() => {
       getProductData()
-    }, 1000);
-    return () => {clearInterval(productInterval)}
+    }, 10000);
+    return () => { clearInterval(productInterval) }
   }, [])
 
   function productFilter() {
@@ -37,15 +42,36 @@ export default function Home() {
 
   return (
     <>
-      {
-        allProducts ? productFilter().map((productData, index) => {
-          return <div key={index} className="">
-            <Product
-              {...productData} />
-          </div>
+      <Box sx={{ flexGrow: 1, ml: 2, mt: 2 }}>
+        <Grid container sx={{
+          mx: 'auto',
+          width: 200,
+          p: 1,
+          m: 1,
+          fontWeight: '700'
+        }} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+          {
+            allProducts ? productFilter().map((productData, index) => {
+              return (
 
-        }
-        ) : < p > Loading products, please wait. </p >}
+                <Grid item xs={2} sm={4} md={4} key={index} >
+                  <Product
+                    {...productData} />
+                </Grid>
+              )
+            }
+            ) : (
+            <>
+            <p> Loading products, please wait. </p >
+              <Stack spacing={1}>
+                <Skeleton variant="text" />
+                <Skeleton variant="circular" width={40} height={40} />
+                <Skeleton variant="rectangular" width={210} height={118} />
+              </Stack>
+              </>)
+          }
+        </Grid>
+      </Box>
     </>
   )
 }

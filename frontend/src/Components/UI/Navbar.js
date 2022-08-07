@@ -4,9 +4,35 @@ import React, { useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom";
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
+
+function LinkTab(props) {
+  return (
+    <Tab
+      component="a"
+      onClick={(event) => {
+        event.preventDefault();
+      }}
+      {...props}
+    />
+  );
+}
+
+
 
 
 export default function Navbar() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const location = useLocation()
   const [isLoggedIn, setIsLoggedIn] = React.useState(Boolean(localStorage.getItem("loggedIn")))
 
@@ -24,32 +50,36 @@ export default function Navbar() {
   return (
     <>
       <header>
+        <Stack sx={{ mt: 2, ml: 2 }} direction="row" spacing={2}>
+          <NavLink to="/">
+            <img className="logo image image is-128x128 p-3 mx-2 my-2" alt="Firesell logo" />
+          </NavLink>
+          <Typography variant={'h1'} >Firesell</Typography>
+        </Stack>
+        <div className="navbar-end">
+          <ButtonGroup onClick={()=> handleChange(null, false)} variant="outlined" aria-label="outlined button group" sx={{ mr: 3 }}>
+            {!isLoggedIn && <Button component={NavLink} to="/login" variant="outlined">
+              Login
+            </Button>}
+            {!isLoggedIn && <Button component={NavLink} to="/register" sx={{ mx: 1 }} variant="outlined" >
+              Register
+            </Button>}
+            {isLoggedIn && <Button component={NavLink} to="/" onClick={Logout} variant="outlined">
+              Logout
+            </Button>}
+          </ButtonGroup>
+        </div>
         <nav >
-          <div className="container-navbar ">
-            <div className="navbar-brand"></div>
-            <div className="navbar-menu">
-              <div className="navbar-start">
-                <NavLink to="/" className="navbar-item is-size-4 has-text-weight-bold ml-3">
-                  Products
-                </NavLink>
-              </div>
-              <div className="navbar-end">
-                <ButtonGroup variant="outlined" aria-label="outlined button group">
 
-                  {!isLoggedIn && <Button component={NavLink} to="/login" variant="outlined">
-                    Login
-                  </Button>}
-                  {!isLoggedIn && <Button component={NavLink} to="/register" variant="outlined" >
-                    Register
-                  </Button>}
-                  {isLoggedIn && <Button component={NavLink} to="/" onClick={Logout} variant="outlined">
-                    Logout
-                  </Button>}
+          <Box sx={{ width: '100%' }}>
+            <Tabs value={value} onChange={handleChange} centered aria-label="nav tabs">
+              <Tab component={Link} to="/" label="Hot today 🔥" />
+              {/* <Tab component={Link} to="/" label="Most downloaded⬇" />
+              <Tab component={Link} to="/" label="Recent hits 🔝" /> */}
+              <Tab component={Link} to="/newseller" label="Sell on Firesell $" />
+            </Tabs>
+          </Box>
 
-                </ButtonGroup>
-              </div>
-            </div>
-          </div>
         </nav>
       </header>
     </>

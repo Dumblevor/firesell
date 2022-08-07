@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, NavLink} from "react-router-dom"
 import * as React from 'react';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
@@ -8,21 +8,21 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import ButtonGroup from '@mui/material/ButtonGroup';
-
+import { spacing } from '@mui/system'
+import Avatar from '@mui/material/Avatar';
 
 
 
 export default function Product(props) {
 
 
-
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, py: 1, pl: 2 }}>
+      <Stack direction="row" spacing={2}>
+        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+      </Stack>
 
-
-      <div>Logo</div>
-      <CardContent>
+      <CardContent >
         <Link to={`/product/${props.id}`}>
           <Typography gutterBottom variant="h5" component="div">{props.name}</Typography>
         </Link>
@@ -35,19 +35,18 @@ export default function Product(props) {
         />
         <div className="subtitle is-6">sold by: (seller id) - {props.product_owner_ID}</div>
         <Typography variant="body2" color="text.secondary">{props.description}</Typography>
-
       </CardContent>
 
-      <Stack spacing={1}>
+      <Stack spacing={2}>
         {/* <Rating name="half-rating" defaultValue={2.5} precision={0.5} /> */}
         <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+        €{props.price}
       </Stack>
 
-      <div>€ {props.price}</div>
+        <Button component={NavLink} sx={{ mx: 1, m: 2 }} variant="outlined" to={`/checkout/${props.id}`}>Purchase now</Button>
 
-      <CardActions>
-        <Button variatn="" size="small">Purchase now</Button>
-      </CardActions>
     </Card >
   )
 }
+
+
