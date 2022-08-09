@@ -2,17 +2,14 @@ import React, { useState, useEffect } from 'react'
 import baseUrl from "../config.js"
 import axios from 'axios'
 import Product from './products/Product.js'
-import { useLocation } from "react-router-dom";
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 
 export default function Home() {
-  const location = useLocation()
 
-  const [allProducts, setAllProducts] = useState([])
+  const [allProducts, setAllProducts] = useState(null)
   const [search, setSearch] = React.useState("")
 
 
@@ -39,7 +36,7 @@ export default function Home() {
     }
     )
   }
-
+console.log(allProducts);
   return (
     <>
       <Box sx={{ flexGrow: 1, ml: 2, mt: 2 }}>

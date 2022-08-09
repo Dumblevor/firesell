@@ -30,6 +30,8 @@ export default function Login() {
       if (data.token) {
         localStorage.setItem('token', data.token)
         localStorage.setItem("loggedIn", true)
+        localStorage.setItem("cartItems", JSON.stringify([]))
+
         navigate('/')
       } else {
         navigate('/login')
@@ -72,7 +74,7 @@ return (
             />
           </div>
         </div>
-        <Button sx={{ mt: 2 }} variant="outlined">
+        <Button sx={{ mt: 2 }} type="submit" variant="outlined">
             SIGN IN
           </Button>
 
@@ -89,3 +91,8 @@ return (
 
 
 }
+
+
+
+
+

@@ -1,4 +1,3 @@
-// import logoFile from '../../assets/logo.ico'
 import { NavLink, Link } from "react-router-dom"
 import React, { useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom";
@@ -9,21 +8,21 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { styled } from '@mui/material/styles';
+import Badge from '@mui/material/Badge';
+import logoFile from "../../Assets/firesell_logo.png"
 
 
-function LinkTab(props) {
-  return (
-    <Tab
-      component="a"
-      onClick={(event) => {
-        event.preventDefault();
-      }}
-      {...props}
-    />
-  );
-}
-
-
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}));
 
 
 export default function Navbar() {
@@ -46,18 +45,29 @@ export default function Navbar() {
     setIsLoggedIn(false)
   }
 
+  const cartsize = JSON.parse(localStorage.getItem('cartItems')).length > 0 ? JSON.parse(localStorage.getItem('cartItems')).length : "0"
 
   return (
     <>
       <header>
         <Stack sx={{ mt: 2, ml: 2 }} direction="row" spacing={2}>
           <NavLink to="/">
-            <img className="logo image image is-128x128 p-3 mx-2 my-2" alt="Firesell logo" />
+            <img src={logoFile} className="logo image image is-128x128 p-3 mx-2 my-2" alt="Firesell logo" />
           </NavLink>
-          <Typography variant={'h1'} >Firesell</Typography>
+          <Typography variant={'h1'} >firesell</Typography>
+
         </Stack>
+        
         <div className="navbar-end">
-          <ButtonGroup onClick={()=> handleChange(null, false)} variant="outlined" aria-label="outlined button group" sx={{ mr: 3 }}>
+
+          <ButtonGroup onClick={() => handleChange(null, false)} variant="outlined" aria-label="outlined button group" sx={{ mr: 3 }}>
+            <Link to='/checkout'>
+              <IconButton aria-label="cart">
+                <StyledBadge badgeContent={cartsize} sx={{ mx: 1 }} color="secondary">
+                  <ShoppingCartIcon />
+                </StyledBadge>
+              </IconButton>
+            </Link>
             {!isLoggedIn && <Button component={NavLink} to="/login" variant="outlined">
               Login
             </Button>}

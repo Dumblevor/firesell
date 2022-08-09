@@ -33,12 +33,28 @@ export default function SellerReg() {
     }
   }
 
+  async function handleLoginSubmit(e) {
+    e.preventDefault()
+    try {
+      const { data } = await axios.post(`${baseUrl}/sellerlogin`, registrationDataForm)
+      console.log(data.token);
+      if (data.token) {
+        localStorage.setItem('token', data.token)
+        localStorage.setItem("loggedIn", true)
+        navigate('/')
+      } else {
+        navigate('/login')
+      }
+    } catch (e) {
+    console.log(e.response.data)
+  }
+}
+
   return (
     <>
       <div className="mx-5">
         <div>Image</div>
-        <h1> Welcome back</h1>
-        <h2> Sign in below</h2>
+        <h1> Welcome Seller</h1>
         <form onSubmit={handleRegistrationSubmission}>
           <div className=" ">
             <label className="label">Email address</label>
@@ -69,9 +85,10 @@ export default function SellerReg() {
           <Button sx={{ mt: 2 }} variant="outlined">
             REGISTER
           </Button>
-
         </form>
-        <div>Already have an account? Sign in here.</div>
+        <Button sx={{ mt: 2 }} variant="outlined" onClick={(e) => handleLoginSubmit(e)}>
+            LOGIN 
+          </Button>
       </div>
       <p className="mx-5 my-5">Copyright Firesell 2022 by Dimitar Vidolov</p>
     </>

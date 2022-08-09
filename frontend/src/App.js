@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import Home from "./Components//Home"
 import Navbar from './Components/UI/Navbar'
 import Login from './Components/Login'
@@ -20,7 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<CustomerReg />} />
         <Route path="/product/:productID" element={<ProductPage />} />
-        <Route path="/checkout/:productID" element={<Checkout />} />
+        <Route path="/checkout/" element={<Checkout />} />
         <Route path="/newseller" element={<SellerReg />} />
         <Route path="/sucessfulorder" element={<SuccessfulOrder />} />
       </Routes>

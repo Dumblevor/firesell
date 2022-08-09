@@ -27,6 +27,8 @@ export default function Checkout() {
     security: "",
   })
 
+  let cartItems = JSON.parse(localStorage.getItem('cartItems'))
+
   useEffect(() => {
     const fetchOneProduct = async () => {
       const { data } = await axios.get(`${baseUrl}/products/${productID}`)
@@ -55,7 +57,7 @@ export default function Checkout() {
 
     try {
       const { response } = await axios.post(`${baseUrl}/neworder`, productID)
-      response.status = 200 && navigate('/sucessfulorder', { state: { productID } })
+      navigate('/sucessfulorder', { state: { productID } })
     } catch (e) {
       console.log(e.response.data)
     }
@@ -168,7 +170,7 @@ export default function Checkout() {
                 </Stack>
                 <div>€ {productData.price}</div>
               </Card>
-              : <p> Loading your product</p>}
+              : <p> Loading your products</p>}
           </Grid>
           <Grid item xs={8}>
             <Box textAlign='center'>

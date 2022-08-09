@@ -24,10 +24,15 @@ export default function ProductPage() {
         .then(data => setProductData(data))
     }
     fetchOneProduct()
+
   })
 
 
-
+  function handleAddtoCart() {
+    let currentItems = JSON.parse(localStorage.getItem('cartItems'))
+    currentItems.push(productID)
+    localStorage.setItem('cartItems', JSON.stringify(currentItems))
+  }
 
   return (
     <>
@@ -43,7 +48,7 @@ export default function ProductPage() {
             <CardMedia
               component="img"
               height="140"
-              image="/static/images/cards/contemplative-reptile.jpg"
+              image={productData.picture}
               alt="green iguana"
             />
             <div className="subtitle is-6">sold by: (seller id) - {productData.product_owner_ID}</div>
@@ -59,8 +64,8 @@ export default function ProductPage() {
           <div>€ {productData.price}</div>
 
           <CardActions>
-            <Button component={ Link } variant="outlined" to={`/checkout/${productData.id}`}>
-              Purchase now</Button>
+            <Button variant="outlined" onClick={() => handleAddtoCart()}>
+              Add to cart</Button>
           </CardActions>
         </Card >
         : <p>Loading product</p>
