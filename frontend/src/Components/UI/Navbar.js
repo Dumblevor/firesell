@@ -27,10 +27,17 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export default function Navbar() {
   const [value, setValue] = React.useState(0);
+  const [cartLen, setCartLen] = React.useState(0);
+
+  useEffect(() => {
+    setCartLen(JSON.parse(localStorage.getItem("cartItems")).length)
+  }, [localStorage])
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
 
   const location = useLocation()
   const [isLoggedIn, setIsLoggedIn] = React.useState(Boolean(localStorage.getItem("loggedIn")))
@@ -45,7 +52,6 @@ export default function Navbar() {
     setIsLoggedIn(false)
   }
 
-  const cartsize = JSON.parse(localStorage.getItem('cartItems')).length > 0 ? JSON.parse(localStorage.getItem('cartItems')).length : "0"
 
   return (
     <>
@@ -57,13 +63,13 @@ export default function Navbar() {
           <Typography variant={'h1'} >firesell</Typography>
 
         </Stack>
-        
+
         <div className="navbar-end">
 
           <ButtonGroup onClick={() => handleChange(null, false)} variant="outlined" aria-label="outlined button group" sx={{ mr: 3 }}>
             <Link to='/checkout'>
               <IconButton aria-label="cart">
-                <StyledBadge badgeContent={cartsize} sx={{ mx: 1 }} color="secondary">
+                <StyledBadge badgeContent={cartLen} sx={{ mx: 1 }} color="secondary">
                   <ShoppingCartIcon />
                 </StyledBadge>
               </IconButton>

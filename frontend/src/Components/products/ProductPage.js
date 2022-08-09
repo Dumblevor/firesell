@@ -10,6 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Product from './Product.js'
 
 
 export default function ProductPage() {
@@ -25,7 +26,7 @@ export default function ProductPage() {
     }
     fetchOneProduct()
 
-  })
+  }, [productID])
 
 
   function handleAddtoCart() {
@@ -37,37 +38,8 @@ export default function ProductPage() {
   return (
     <>
       {productData ?
-        <Card sx={{ maxWidth: 345 }}>
-
-          <div>Logo</div>
-          <CardContent>
-            <Link to={`/product/${productData.id}`}>
-              <Typography gutterBottom variant="h5" component="div">{productData.name}</Typography>
-            </Link>
-
-            <CardMedia
-              component="img"
-              height="140"
-              image={productData.picture}
-              alt="green iguana"
-            />
-            <div className="subtitle is-6">sold by: (seller id) - {productData.product_owner_ID}</div>
-            <Typography variant="body2" color="text.secondary">{productData.description}</Typography>
-
-          </CardContent>
-
-          <Stack spacing={1}>
-            {/* <Rating name="half-rating" defaultValue={2.5} precision={0.5} /> */}
-            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
-          </Stack>
-
-          <div>€ {productData.price}</div>
-
-          <CardActions>
-            <Button variant="outlined" onClick={() => handleAddtoCart()}>
-              Add to cart</Button>
-          </CardActions>
-        </Card >
+        <Product
+        {...productData} />
         : <p>Loading product</p>
       }
     </>

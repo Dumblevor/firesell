@@ -27,28 +27,27 @@ export default function Product(props) {
   return (
 
     <Card sx={{ maxWidth: 345, py: 1, pl: 2 }}>
-      <Stack direction="row" spacing={2}>
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+
+      <Link to={`/product/${props.id}`}>
+              <Stack direction="row" spacing={2}>
       </Stack>
-
-      <CardContent >
-        <Link to={`/product/${props.id}`}>
+        <CardContent>
+          <Avatar alt={props.name} src={props.pictures[0].url} />
           <Typography gutterBottom variant="h5" component="div">{props.name}</Typography>
-        </Link>
-
-        <CardMedia
-          component="img"
-          height="140"
-          image={props.pictures[0].url}
-          alt="green iguana"
-        />
-        <div className="subtitle is-6">sold by: (seller id) - {props.product_owner_ID}</div>
-        <Typography variant="body2" color="text.secondary">{props.description}</Typography>
-      </CardContent>
+          <CardMedia
+            component="img"
+            height="140"
+            image={props.pictures[0].url}
+            alt={props.description}
+          />
+          <div className="subtitle is-6">sold by: (seller id) - {props.product_owner_ID}</div>
+          <Typography variant="body2" color="text.secondary">{props.description}</Typography>
+        </CardContent>
+      </Link>
 
       <Stack spacing={2}>
         {/* <Rating name="half-rating" defaultValue={2.5} precision={0.5} /> */}
-        <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+        <Rating name="half-rating-read" defaultValue={props.rating} precision={0.5} readOnly />
         €{props.price}
       </Stack>
 
