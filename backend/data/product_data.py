@@ -24,21 +24,22 @@ product_list = [
     ProductModel(
         name="App1",
         price=2.99,
-        description="like Spotify but better",
+        description="Launch your own ecommerce site in minutes",
         product_owner_ID=3,
         categories=[category_list[5]]
     ),
     ProductModel(
         name="App2",
         price=3.99,
-        description="like Uber for bikes",
+        description="Use real-time data to convert web visitors into readers",
         product_owner_ID=1,
         categories=[category_list[2], category_list[4]]
+
     ),
     ProductModel(
         name="App3",
         price=555,
-        description="bettersnap tool for any screen, including ",
+        description="Manage monetize, and analyze your affiliate product promotions at scale",
         product_owner_ID=2,
         categories=[category_list[1]]
     ),

@@ -18,7 +18,7 @@ def get_products():
 @router.route("/products/<int:product_id>", methods=["GET"])
 def get_a_product(product_id):
     product = ProductModel.query.get(product_id)
-
+    
     if not product:
         return {"message": "Product not found"}, HTTPStatus.NOT_FOUND
     return product_schema.jsonify(product), HTTPStatus.OK

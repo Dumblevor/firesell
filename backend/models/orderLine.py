@@ -2,8 +2,6 @@ from datetime import datetime
 from models.basemodel import BaseModel
 from app import db
 
-
-
 class OrderLineModel(db.Model, BaseModel):
     __tablename__ = "order_lines"
 

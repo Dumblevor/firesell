@@ -6,7 +6,7 @@ from models.catPro import catPro
 from models.rating import RatingModel
 from models.comment import CommentModel
 from models.product_category import CategoryModel
-
+from models.picture import PictureModel
 
 
 class ProductModel(db.Model, BaseModel):
@@ -20,6 +20,7 @@ class ProductModel(db.Model, BaseModel):
     
     categories = db.relationship("CategoryModel", backref='products', secondary=catPro)
     comments = db.relationship("CommentModel", backref='products', cascade="all, delete")
-    ratings = db.relationship("RatingModel", backref='products')
-    
+    ratings = db.relationship("RatingModel", backref='products',  cascade="all, delete")
+    pictures = db.relationship("PictureModel", backref='products',  cascade="all, delete")
+
     orders = db.relationship("OrderLineModel", back_populates="product")
