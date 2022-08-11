@@ -29,9 +29,10 @@ export default function Navbar() {
   const [value, setValue] = React.useState(0);
   const [cartLen, setCartLen] = React.useState(0);
 
-  useEffect(() => {
-    setCartLen(JSON.parse(localStorage.getItem("cartItems")).length)
-  }, [localStorage])
+  const updateCart = useEffect(() => {
+
+    localStorage.getItem("cartItems") && setCartLen(JSON.parse(localStorage.getItem("cartItems")).length)
+  }, [])
 
 
   const handleChange = (event, newValue) => {

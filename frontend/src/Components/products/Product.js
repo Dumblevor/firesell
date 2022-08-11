@@ -18,7 +18,6 @@ export default function Product(props) {
 
   function handleAddtoCart() {
     let currentItems = JSON.parse(localStorage.getItem('cartItems'))
-    console.log(currentItems);
     currentItems.push(props.id)
     localStorage.setItem('cartItems', JSON.stringify(currentItems))
   }
@@ -33,14 +32,16 @@ export default function Product(props) {
       </Stack>
         <CardContent>
           <Avatar alt={props.name} src={props.pictures[0].url} />
+          
           <Typography gutterBottom variant="h5" component="div">{props.name}</Typography>
+          <div className="subtitle is-6">sold by: (seller id) - {props.product_owner_ID}</div>
+
           <CardMedia
             component="img"
             height="140"
             image={props.pictures[0].url}
             alt={props.description}
           />
-          <div className="subtitle is-6">sold by: (seller id) - {props.product_owner_ID}</div>
           <Typography variant="body2" color="text.secondary">{props.description}</Typography>
         </CardContent>
       </Link>

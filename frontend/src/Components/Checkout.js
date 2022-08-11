@@ -13,11 +13,15 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import Product from './products/Product.js';
+import Avatar from '@mui/material/Avatar';
+import Skeleton from '@mui/material/Skeleton';
+
 
 export default function Checkout() {
   const navigate = useNavigate()
-  const { productID } = useParams()
-  const [productData, setProductData] = useState(undefined)
+
+  const [productData, setProductData] = useState([])
   const [alignment, setAlignment] = React.useState('card');
 
   const [cardData, setCardData] = useState({
@@ -27,15 +31,33 @@ export default function Checkout() {
     security: "",
   })
 
-  let cartItems = JSON.parse(localStorage.getItem('cartItems'))
+  let total = 0;
+
+  const token = localStorage.getItem('token')
+
+  let itemsGet = JSON.parse(localStorage.getItem('cartItems'))
 
   useEffect(() => {
-    const fetchOneProduct = async () => {
-      const { data } = await axios.get(`${baseUrl}/products/${productID}`)
-      setProductData(data)
+    let newSet = [...new Set(itemsGet)]
+    let array = []
+    // async function fetchOneProduct(item) {
+    //   const { data } = await axios.get(`${baseUrl}/products/${item}`)
+    //   return data
+    // }
+
+    for (let item in newSet) {
+      array.push(new Promise(async (resolve) => {
+        const { data } = await axios.get(`${baseUrl}/products/${newSet[item]}`)
+        resolve(data)
+      }))
     }
-    fetchOneProduct()
-  }, [productID])
+
+    // setProductData(array)
+
+    Promise.all(array).then((values) => {
+      setProductData(values)
+    })
+  }, [])
 
 
   const handleChangeToggle = (event, newAlignment) => {
@@ -54,10 +76,15 @@ export default function Checkout() {
 
   async function handleOrderSubmit(e) {
     e.preventDefault()
-
+    console.log(itemsGet);
     try {
-      const { response } = await axios.post(`${baseUrl}/neworder`, productID)
-      navigate('/sucessfulorder', { state: { productID } })
+      const { response } = await axios.post(`${baseUrl}/neworder`, itemsGet, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      console.log(response);
+
+      localStorage.setItem("cartItems", JSON.stringify([]))
+      navigate('/sucessfulorder')
     } catch (e) {
       console.log(e.response.data)
     }
@@ -140,38 +167,35 @@ export default function Checkout() {
 
 
           <Grid item xs={5}>
-            {productData ?
-              <Card sx={{
-                maxWidth: 345, mx: 'auto',
-                p: 1,
-                m: 1,
-                fontSize: '0.875rem',
-                fontWeight: '700',
-              }} >
-                <div>Logo</div>
-                <CardContent>
-                  <Link to={`/product/${productData.id}`}>
+            {
+              productData ? productData.map((productData, index) => {
+                let qty = itemsGet.filter((item) => item === productData.id).length
+                total += productData.price * qty
+                return (
+                  <div key={index}>
                     <Typography gutterBottom variant="h5" component="div">{productData.name}</Typography>
-                  </Link>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image="/static/images/cards/contemplative-reptile.jpg"
-                    alt="green iguana"
-                  />
-                  <div className="subtitle is-6">sold by: (seller id) - {productData.product_owner_ID}</div>
-                  <Typography variant="body2" color="text.secondary">{productData.description}</Typography>
+                    <Typography variant="body2" color="text.secondary">{productData.description}</Typography>
+                    €{productData.price} x {qty} QTY
 
-                </CardContent>
+                  </div>
+                )
+              }
 
+              ) : (
+                <p> Loading products, please wait. </p >)}
+                <br/><br/>
                 <Stack spacing={1}>
-                  {/* <Rating name="half-rating" defaultValue={2.5} precision={0.5} /> */}
-                  <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
-                </Stack>
-                <div>€ {productData.price}</div>
-              </Card>
-              : <p> Loading your products</p>}
+                <Skeleton variant="circular" width={40} height={40} />
+                <Skeleton variant="text">-----------</Skeleton>
+                <Skeleton variant="rectangular" width={210} height={118} />
+              </Stack>
+                {productData.length === 0 && <p>Your cart is empty, go ahead and add some products!</p>}
+                <br/><br/>
+            <Typography gutterBottom variant="h5" component="div">Total: € {total}</Typography>
+            <p>Please note shipping is always free</p>
+
           </Grid>
+
           <Grid item xs={8}>
             <Box textAlign='center'>
               <Button variant="contained" type="submit" form="orderForm" onClick={(e) => handleOrderSubmit(e)} color="success">
