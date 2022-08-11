@@ -6,4 +6,4 @@ class RatingModel(db.Model, BaseModel):
 
     rating = db.Column(db.Float, nullable=False, unique=False)
     product_id = db.Column(db.Integer, db.ForeignKey("products.id", ondelete='CASCADE'), nullable=False)
-    comment_owner_id = db.Column(db.Integer, db.ForeignKey("customers.id", ondelete='CASCADE'), nullable=False)
+    rating_owner = db.Column(db.Integer, db.ForeignKey("customers.id", ondelete='CASCADE'), nullable=False)
