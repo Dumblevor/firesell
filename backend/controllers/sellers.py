@@ -8,7 +8,7 @@ from marshmallow.exceptions import ValidationError
 seller_schema = SellerSchema()
 
 
-router = Blueprint("users", __name__)
+router = Blueprint("sellers", __name__)
 
 
 @router.route("/newseller", methods=["POST"])

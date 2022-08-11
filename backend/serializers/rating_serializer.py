@@ -1,4 +1,3 @@
-from marshmallow import fields
 from app import ma
 from models.rating import RatingModel
 

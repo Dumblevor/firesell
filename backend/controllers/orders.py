@@ -33,6 +33,7 @@ def create_order():
     order_dict = request.json
     try:
         order = order_schema.load(order_dict)
+        
     except ValidationError as e:
         return {"errors": e.messages, "message": "Something went wrong"}
         

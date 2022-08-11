@@ -53,7 +53,7 @@ comments_list = [
 ]
 
 ratings_list = [
-    RatingModel(rating=2.3, product_id=2, comment_owner_id=1),
-    RatingModel(rating=3.3, product_id=3, comment_owner_id=2),
-    RatingModel(rating=4.3, product_id=1, comment_owner_id=3)
+    RatingModel(rating=2.3, product_id=2, rating_owner=1),
+    RatingModel(rating=3.3, product_id=3, rating_owner=2),
+    RatingModel(rating=4.3, product_id=1, rating_owner=3)
 ]

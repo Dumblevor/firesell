@@ -1,6 +1,6 @@
+from marshmallow import fields
 from app import ma
 from models.comment import CommentModel
-from marshmallow import fields
 
 
 class CommentSchema(ma.SQLAlchemyAutoSchema):
