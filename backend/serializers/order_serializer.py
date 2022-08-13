@@ -6,5 +6,4 @@ class OrderSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = OrderModel
         load_instance = True
-        include_fk = True
 

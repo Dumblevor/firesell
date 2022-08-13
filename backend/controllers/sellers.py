@@ -15,12 +15,9 @@ router = Blueprint("sellers", __name__)
 def register_seller():
     try:
         seller_dictionary = request.json
-        print("1", seller_dictionary)
         seller = seller_schema.load(seller_dictionary)
-        print("2", seller)
 
         seller.save()
-        print("3")
         return seller_schema.jsonify(seller)
     except ValidationError as e:
         return {"errors": e.messages, "messages": "Something went wrong1."}

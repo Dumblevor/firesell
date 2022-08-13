@@ -48,8 +48,8 @@ product_list = [
 
 comments_list = [
     CommentModel(content="This is a great", user_id=1, product_id=1),
-    CommentModel(content="This is a great", user_id=2, product_id=3),
-    CommentModel(content="This is a great", user_id=3, product_id=2)
+    CommentModel(content="Hot stuff!", user_id=2, product_id=2),
+    CommentModel(content="Perfect app for my ew affiliate program, works most of the time!", user_id=3, product_id=3)
 ]
 
 ratings_list = [

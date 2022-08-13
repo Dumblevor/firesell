@@ -11,14 +11,14 @@ order_schema = OrderSchema()
 
 
 @router.route("/allorders", methods=["GET"])
-# @secure_route
+@secure_route
 def get_orders():
     orders = OrderModel.query.all()
     return order_schema.jsonify(orders, many=True), HTTPStatus.OK
 
 
 @router.route("/orders/<int:order_id>", methods=["GET"])
-# @secure_route
+@secure_route
 def get_an_order(order_id):
     order = OrderModel.query.get(order_id)
 
@@ -28,17 +28,34 @@ def get_an_order(order_id):
 
 
 @router.route("/neworder", methods=["POST"])
-# @secure_route
+@secure_route
 def create_order():
+
     order_dict = request.json
-    try:
-        order = order_schema.load(order_dict)
+
+    # for product in order_dict.products:
         
+    #     product.quantity = order_dict.products.count(product)
+
+    print(order_dict)
+    
+    orderState =
+    try:
+        order = order_schema.load(order_dict) 
+        #make order
+        #
+        print(order)
     except ValidationError as e:
         return {"errors": e.messages, "message": "Something went wrong"}
-        
+    order.orderStatus = "New"
     order.customer_id = g.current_customer.id
+
+    print(g.current_customer.id)
+    print(order.customer_id)
+    
     order.save()
 
-    return order_schema.jsonify(order), HTTPStatus.CREATED
+    #make orderLines second
 
+
+    return HTTPStatus.CREATED

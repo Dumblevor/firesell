@@ -13,8 +13,8 @@ from serializers.rating_serializer import RatingSchema
 
 router = Blueprint("products", __name__)
 product_schema = ProductSchema()
-comment_schema = CommentSchema
-rating_schema = RatingSchema
+comment_schema = CommentSchema()
+rating_schema = RatingSchema()
 
 @router.route("/allproducts", methods=["GET"])
 def get_products():
@@ -80,9 +80,11 @@ def create_comment(product_id):
         comment = comment_schema.load(comment_dict)
     except ValidationError as e:
         return {"errors": e.messages, "message": "Unable to post comment."}
+    
     comment.product_id = product_id
-    comment.user_id = g.current_customer
+    comment.user_id = g.current_customer.id
     comment.save()
+    
     return comment_schema.jsonify(comment), HTTPStatus.CREATED
 
 
@@ -91,6 +93,7 @@ def create_comment(product_id):
 def update_comment(product_id, comment_id):
     comment_dict = request.json
     current_comment = CommentModel.query.get(comment_id)
+
     if not current_comment:
         return {"message": "Comment doesn't exist"}, HTTPStatus.NOT_FOUND
     try:
@@ -106,6 +109,7 @@ def update_comment(product_id, comment_id):
     if not product:
         return {"message": "Product not found"}, HTTPStatus.NOT_FOUND
     return product_schema.jsonify(product), HTTPStatus.OK
+
 
 @router.route("/products/<int:product_id>/comments/<int:comment_id>", methods=["DELETE"])
 @secure_route

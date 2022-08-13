@@ -1,6 +1,6 @@
-from marshmallow import fields
 from app import ma
 from models.comment import CommentModel
+from marshmallow import fields
 
 
 class CommentSchema(ma.SQLAlchemyAutoSchema):
@@ -8,4 +8,4 @@ class CommentSchema(ma.SQLAlchemyAutoSchema):
         model = CommentModel
         load_instance = True
 
-    user = fields.Nested("CustomerShema", many=False)
+    user = fields.Nested("CustomerSchema", many=False)

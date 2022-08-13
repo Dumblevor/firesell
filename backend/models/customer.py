@@ -19,7 +19,6 @@ class CustomerModel(db.Model, BaseModel):
     address = db.Column(db.Text, nullable=True, unique=False)
 
     orders = db.relationship("OrderModel", backref="customers")
-    comments = db.relationship("CommentModel", backref="customers")
     ratings = db.relationship("RatingModel", backref="customers")
 
     @hybrid_property

@@ -9,3 +9,4 @@ class OrderModel(db.Model, BaseModel):
     customer_id = db.Column(db.Integer, db.ForeignKey("customers.id", ondelete='CASCADE'), nullable=False)
     
     products = db.relationship("OrderLineModel", back_populates='order')
+    
