@@ -5,10 +5,11 @@ from middleware.secure_route import secure_route
 
 from models.order import OrderModel
 from serializers.order_serializer import OrderSchema
+from serializers.orderLine_serializer import OrderLineSchema
 
 router = Blueprint("orders", __name__)
 order_schema = OrderSchema()
-
+orderLine_schema = OrderLineSchema()
 
 @router.route("/allorders", methods=["GET"])
 @secure_route
@@ -30,31 +31,44 @@ def get_an_order(order_id):
 @router.route("/neworder", methods=["POST"])
 @secure_route
 def create_order():
-
+    total = 0
     order_dict = request.json
 
-    # for product in order_dict.products:
-        
-    #     product.quantity = order_dict.products.count(product)
+    for product in order_dict.products:
+        getProduct = ProductModel.query.get(product_id)
+        total += product.quantity * getProduct.price
 
-    print(order_dict)
-    
-    orderState =
+
+    orderData.totalAmount = total
+    orderData.orderStatus = "new"
+
     try:
-        order = order_schema.load(order_dict) 
-        #make order
-        #
+        order = order_schema.load(orderData)    #make order
         print(order)
     except ValidationError as e:
         return {"errors": e.messages, "message": "Something went wrong"}
-    order.orderStatus = "New"
+
     order.customer_id = g.current_customer.id
+    savedOrder = order.save()
+
+
+    for product in order_dict.products:
+
+
+        orderLineData
+        orderLine.order_id = savedOrder.id
+
+
+        newOrderLine = orderLine_schema.load(orderLine)
+
+        newOrderLineSaved = newOrderLine.save()
+
+        print(newOrderLineSaved)
+        
 
     print(g.current_customer.id)
     print(order.customer_id)
     
-    order.save()
-
     #make orderLines second
 
 

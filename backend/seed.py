@@ -26,9 +26,6 @@ with app.app_context():
         db.session.add_all(picture_list)
         db.session.commit()
 
-        db.session.add_all(comments_list)
-        db.session.commit()
-
         db.session.add_all(ratings_list)
         db.session.commit()
 
@@ -36,6 +33,9 @@ with app.app_context():
         db.session.commit()
 
         db.session.add_all(orderline_list)
+        db.session.commit()
+
+        db.session.add_all(comments_list)
         db.session.commit()
 
         print("goodbye")

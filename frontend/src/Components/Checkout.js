@@ -19,6 +19,8 @@ import Skeleton from '@mui/material/Skeleton';
 
 
 export default function Checkout() {
+
+
   const navigate = useNavigate()
 
   const [productData, setProductData] = useState([])
@@ -75,18 +77,47 @@ export default function Checkout() {
 
   async function handleOrderSubmit(e) {
     e.preventDefault()
-    const itemsArray = itemsGet.join(",")
-    //array of numbers
-    const itemsReduce = itemsArray.reduce((acc, item) => {
-      return 
-    })
-    console.log(itemsArray);
+
+
+
+      // id numbers
+const itemsGet = "1,1,2,3,2,4"
+// convert to array of ids
+const arrayOfIds = itemsGet.split(',')
+// ensure they are numbers
+const numbersOfIds = arrayOfIds.map(id => Number(id))
+// create an object where product_id are keys and values are quantities 
+const objs = numbersOfIds.reduce((acc, productId) => {
+  if (acc[productId]) return { ...acc, [productId]: acc[productId] + 1 }
+  else return { ...acc, [productId]: 1 }
+}, {})
+
+// turn this into an array of objects, with product_id and qty
+const data = Object.entries(objs).map((item) => {
+  const [productId, quantity] = item
+  return { product_id: productId, qty: quantity }
+})
+
+console.log(data) // this is the format you want for your backend
+
+
+
+
+
+
+
+    // const itemsArray = itemsGet.join(",")
+    // //array of numbers
+    // const itemsReduce = itemsArray.reduce((acc, item) => {
+    //   return 
+    // })
+    // console.log(itemsArray);
 
     try {
-      const { response } = await axios.post(`${baseUrl}/neworder`, itemsGet, {
+      const { response } = await axios.post(`${baseUrl}/neworder`, {"products": data}, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      console.log(response);
+      console.log({"products": data});
 
       localStorage.setItem("cartItems", JSON.stringify([]))
       navigate('/sucessfulorder')
