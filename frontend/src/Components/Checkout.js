@@ -34,7 +34,6 @@ export default function Checkout() {
   let total = 0;
 
   const token = localStorage.getItem('token')
-
   let itemsGet = JSON.parse(localStorage.getItem('cartItems'))
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export default function Checkout() {
     Promise.all(array).then((values) => {
       setProductData(values)
     })
-  }, [])
+  }, [itemsGet])
 
 
   const handleChangeToggle = (event, newAlignment) => {
@@ -76,7 +75,13 @@ export default function Checkout() {
 
   async function handleOrderSubmit(e) {
     e.preventDefault()
-    console.log(itemsGet);
+    const itemsArray = itemsGet.join(",")
+    //array of numbers
+    const itemsReduce = itemsArray.reduce((acc, item) => {
+      return 
+    })
+    console.log(itemsArray);
+
     try {
       const { response } = await axios.post(`${baseUrl}/neworder`, itemsGet, {
         headers: { Authorization: `Bearer ${token}` },
@@ -163,6 +168,11 @@ export default function Checkout() {
                 </div>
               </div>
             </form>
+            <Box sx={{ xs: 2, my: 2 }} textAlign='center'>
+              <Button variant="contained" type="submit" form="orderForm" onClick={(e) => handleOrderSubmit(e)} color="success">
+                Complete Purchase
+              </Button>
+            </Box>
           </Grid>
 
 
@@ -173,36 +183,36 @@ export default function Checkout() {
                 total += productData.price * qty
                 return (
                   <div key={index}>
+                    <hr />
                     <Typography gutterBottom variant="h5" component="div">{productData.name}</Typography>
                     <Typography variant="body2" color="text.secondary">{productData.description}</Typography>
                     €{productData.price} x {qty} QTY
-
+                    <hr />
                   </div>
                 )
               }
-
               ) : (
                 <p> Loading products, please wait. </p >)}
-                <br/><br/>
+
+            {productData.length === 0 &&
+              <div>
+                < br /><br />
                 <Stack spacing={1}>
-                <Skeleton variant="circular" width={40} height={40} />
-                <Skeleton variant="text">-----------</Skeleton>
-                <Skeleton variant="rectangular" width={210} height={118} />
-              </Stack>
-                {productData.length === 0 && <p>Your cart is empty, go ahead and add some products!</p>}
-                <br/><br/>
-            <Typography gutterBottom variant="h5" component="div">Total: € {total}</Typography>
+                  <Skeleton variant="circular" width={40} height={40} />
+                  <Skeleton variant="text">-----------</Skeleton>
+                  <Skeleton variant="rectangular" width={210} height={118} />
+                </Stack>
+                <p>Your cart is empty, go ahead and add some products!</p>
+              </div>}
+            <br /><br />
+            <Typography gutterBottom variant="h4" >Total: € {parseFloat(total).toFixed(2)}</Typography>
+
             <p>Please note shipping is always free</p>
+            <hr />
 
           </Grid>
 
-          <Grid item xs={8}>
-            <Box textAlign='center'>
-              <Button variant="contained" type="submit" form="orderForm" onClick={(e) => handleOrderSubmit(e)} color="success">
-                Complete Purchase
-              </Button>
-            </Box>
-          </Grid>
+
         </Grid>
       </Box>
     </>

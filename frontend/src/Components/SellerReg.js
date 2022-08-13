@@ -25,9 +25,9 @@ export default function SellerReg() {
     e.preventDefault()
     try {
       const { data } = await axios.post(`${baseUrl}/newseller`, registrationDataForm)
-      data
+      data && handleLoginSubmit() && console.log("logging in")
+      console.log("success") && navigate('/')
       // && data.token && localStorage.setItem('token', data.token)
-      && navigate('/')
     } catch (e) {
       console.log(e.response.data)
     }
@@ -39,21 +39,25 @@ export default function SellerReg() {
       const { data } = await axios.post(`${baseUrl}/sellerlogin`, registrationDataForm)
       console.log(data.token);
       if (data.token) {
+        
         localStorage.setItem('token', data.token)
         localStorage.setItem("loggedIn", true)
+        localStorage.setItem("cartItems", JSON.stringify([]))
+
+        console.log("success");
         navigate('/')
       } else {
         navigate('/login')
       }
     } catch (e) {
-    console.log(e.response.data)
+      console.log(e.response.data)
+    }
   }
-}
 
   return (
     <>
       <div className="mx-5">
-        <div>Image</div>
+        <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="computer online selling data and software revenue dashboard"></img>
         <h1> Welcome Seller</h1>
         <form onSubmit={handleRegistrationSubmission}>
           <div className=" ">
@@ -87,8 +91,8 @@ export default function SellerReg() {
           </Button>
         </form>
         <Button sx={{ mt: 2 }} variant="outlined" onClick={(e) => handleLoginSubmit(e)}>
-            LOGIN 
-          </Button>
+          LOGIN
+        </Button>
       </div>
       <p className="mx-5 my-5">Copyright Firesell 2022 by Dimitar Vidolov</p>
     </>

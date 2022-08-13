@@ -24,7 +24,7 @@ export default function SuccessfulOrder(props) {
     <>
       <Box textAlign='center' sx={{ mx: 1, m: 2 }} >
 
-        <p> You've successfully ordered {props.name}, please check your email for you product code and access link.
+        <p> You've successfully ordered {props.name}, please check your email for next steps.
           This page will dissapear in 10 seconds.</p>
 
         <Button component={Link} sx={{ mx: 1, m: 2 }} variant="outlined" to="/">Home Page</Button>
