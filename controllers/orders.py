@@ -11,6 +11,7 @@ router = Blueprint("orders", __name__)
 order_schema = OrderSchema()
 orderLine_schema = OrderLineSchema()
 
+
 @router.route("/allorders", methods=["GET"])
 @secure_route
 def get_orders():
@@ -35,15 +36,16 @@ def create_order():
     order_dict = request.json
 
     for product in order_dict.products:
-        getProduct = ProductModel.query.get(product_id)
+        getProduct = ProductModel.query.get(product.product_id)
         total += product.quantity * getProduct.price
 
-
-    orderData.totalAmount = total
-    orderData.orderStatus = "new"
+    orderData = {
+        "totalAmount": total,
+        "orderStatus": "new"
+    }
 
     try:
-        order = order_schema.load(orderData)    #make order
+        order = order_schema.load(orderData)  # make order
         print(order)
     except ValidationError as e:
         return {"errors": e.messages, "message": "Something went wrong"}
@@ -51,25 +53,18 @@ def create_order():
     order.customer_id = g.current_customer.id
     savedOrder = order.save()
 
-
     for product in order_dict.products:
+        orderLineData = {
+            "product_id": product.product_id,
+            "order_id": savedOrder.id,
+            "quantity": product.quantity
+        }
 
-
-        orderLineData
-        orderLine.order_id = savedOrder.id
-
-
-        newOrderLine = orderLine_schema.load(orderLine)
-
+        newOrderLine = orderLine_schema.load(orderLineData)
         newOrderLineSaved = newOrderLine.save()
-
         print(newOrderLineSaved)
-        
 
     print(g.current_customer.id)
     print(order.customer_id)
-    
-    #make orderLines second
-
 
     return HTTPStatus.CREATED
