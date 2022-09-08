@@ -15,13 +15,10 @@ router = Blueprint("users", __name__)
 def register_customer():
     try:
         customer_dictionary = request.json
-        print("1", customer_dictionary)
         customer = customer_schema.load(customer_dictionary)
-        print("2", customer)
-
         customer.save()
-        print("3")
         return customer_schema.jsonify(customer)
+
     except ValidationError as e:
         return {"errors": e.messages, "messages": "Something went wrong1."}
 
@@ -43,6 +40,7 @@ def customer_login():
                 "message": "No user associated with this email was found, please check the email entered and try again."
             }, HTTPStatus.NOT_FOUND
         if not customer.validate_password(credentials_dictionary["password"]):
+
             return {"message": "You are not autorized."}, HTTPStatus.UNAUTHORIZED
         token = customer.generate_token()
         return {"token": token, "message": "Welcome back!"}

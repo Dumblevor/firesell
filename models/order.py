@@ -5,7 +5,7 @@ class OrderModel(db.Model, BaseModel):
     __tablename__ = "orders"
 
     totalAmount = db.Column(db.Float, nullable=True, unique=False)
-    orderStatus = db.Column(db.Text, nullable=True, unique=True)
+    orderStatus = db.Column(db.Text, nullable=True, unique=False)
     customer_id = db.Column(db.Integer, db.ForeignKey("customers.id", ondelete='CASCADE'), nullable=False)
     
     products = db.relationship("OrderLineModel", back_populates='order')

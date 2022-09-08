@@ -4,8 +4,10 @@ from marshmallow.exceptions import ValidationError
 from middleware.secure_route import secure_route
 
 from models.order import OrderModel
+from models.product import ProductModel
 from serializers.order_serializer import OrderSchema
 from serializers.orderLine_serializer import OrderLineSchema
+
 
 router = Blueprint("orders", __name__)
 order_schema = OrderSchema()
@@ -34,10 +36,10 @@ def get_an_order(order_id):
 def create_order():
     total = 0
     order_dict = request.json
-
-    for product in order_dict.products:
-        getProduct = ProductModel.query.get(product.product_id)
-        total += product.quantity * getProduct.price
+    print(order_dict)
+    # for product in order_dict.product_id:
+    #     getProduct = ProductModel.query.get(product)
+    #     total += product.quantity * getProduct.price
 
     orderData = {
         "totalAmount": total,
