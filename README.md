@@ -38,10 +38,6 @@ Association tables for Product / Category and OrderLines took some time due to c
 - Day 5: Promise.all on the frontend
 
 
-## Jira setup 
-
-My tickets are marked orange.
-
 ### Build:
 #### MVP Roadmap
 
@@ -54,21 +50,17 @@ My tickets are marked orange.
 #### MVP done
 
 --------
+Final version of the newsfeed:
+![Store](./)
 
 ## Bugs, Wins & Learnings
-Many features that were stretch goals were not finished, including search for the whole site, filtering by tags, upvotes for posts.
-It was a great project and there is a throve of features that can be added to make it a proper product. 
+Currently due to some configuration changes in the database hosting login and register can be buggy.
+Checking out doesn't create an order on the backend.
 
-Working in team is fun and can get a lot done when the group is in sync. 
-I personally learned quite a bit about react, router, state and bulma on this project. 
+The big wins were getting all the database tables right on the backend.
+On the frontend it was the checkout, where I had create a unique set of the cart  items (an array of product numbers)
 
-
-  That way the user will see up-to-date data. 
-  Deleting comments and posts in real time using state also improves drastically the UX. 
-  I aslo added a show/hide button for the comments so the feed doesn't clutter. 
-
-Final version of the newsfeed:
-![newsfeed](./readme-assets/final-social.png)
+The check-out needs to be completed on the backend, ratings code needs to be completed on the both the frontend and the backend.
 
 ## Credits
 - Logo: Dimitar Vidolov (via canva.com).
