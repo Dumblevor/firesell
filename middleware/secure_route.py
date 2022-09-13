@@ -1,6 +1,5 @@
 from http import HTTPStatus
 import jwt
-
 from functools import wraps
 from flask import request, g
 from models.customer import CustomerModel
@@ -26,6 +25,7 @@ def secure_route(route_func):
                 return {
                     "message": "Unauthorized, please check your credentials and try again"
                 }, HTTPStatus.UNAUTHORIZED
+                
             g.current_customer = customer
 
         except jwt.ExpiredSignatureError:

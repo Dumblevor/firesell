@@ -27,6 +27,8 @@ def register_customer():
         return {"messages": "Something went wrong2."}
 
 
+
+
 @router.route("/customerlogin", methods=["POST"])
 def customer_login():
     try:

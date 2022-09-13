@@ -29,18 +29,27 @@ def get_a_product(product_id):
         return {"message": "Product not found"}, HTTPStatus.NOT_FOUND
     return product_schema.jsonify(product), HTTPStatus.OK
 
-
+# new product submission
 @router.route("/newproduct", methods=["POST"])
 @secure_route
 def create_product():
     product_dict = request.json
+    print(1, product_dict)
     try:
         product = product_schema.load(product_dict)
+        
+        print(2, product)
+
     except ValidationError as e:
+        print(e.messages)
         return {"errors": e.messages, "message": "Something went wrong"}
     product.product_owner_ID = g.current_customer.id
+    print(3, product)
     product.save()
     return product_schema.jsonify(product), HTTPStatus.CREATED
+
+
+
 
 
 @router.route("/products/<int:product_id>", methods=["PUT"])
@@ -131,8 +140,10 @@ def add_rating(product_id):
         rating = rating_schema.load(rating)
     except ValidationError as e:
         return {"errors": e.messages, "message": "Unable to add rating."}
+
     rating.product_id = product_id
     rating.user_id = g.current_customer
     rating.save()
+
     return rating_schema.jsonify(rating), HTTPStatus.CREATED
     
